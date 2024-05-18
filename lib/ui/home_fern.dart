@@ -12,6 +12,13 @@ class _HomeFernState extends State<HomeFern> {
   final PageController _pageController = PageController(initialPage: 0);
   int currentIndex = 0;
 
+  void _nextPage() {
+    if (currentIndex < 2) {
+      _pageController.nextPage(
+          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +30,54 @@ class _HomeFernState extends State<HomeFern> {
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-
+          PageView(
+            controller: _pageController,
+            onPageChanged: (int index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+            children: [
+              createPage(
+                  image: 'assets/images/plant-one.png',
+                  title: Constants.titleOne,
+                  description: Constants.descriptionOne),
+              createPage(
+                  image: 'assets/images/plant-two.png',
+                  title: Constants.titleTwo,
+                  description: Constants.descriptionTwo),
+              createPage(
+                  image: 'assets/images/plant-three.png',
+                  title: Constants.titleThree,
+                  description: Constants.descriptionThree)
+            ],
+          ),
+          Positioned(
+            left: MediaQuery.of(context).size.width * 0.1,
+            bottom: MediaQuery.of(context).size.height * 0.1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: _buildIndicator(),
+            ),
+          ),
+          Positioned(
+            right: MediaQuery.of(context).size.width * 0.05,
+            bottom: MediaQuery.of(context).size.height * 0.07,
+            child: InkWell(
+              onTap: _nextPage,
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.15,
+                height: MediaQuery.of(context).size.width * 0.15,
+                decoration: BoxDecoration(
+                    color: Constants.primaryColor,
+                    borderRadius: BorderRadius.all(Radius.circular(360))),
+                child: Icon(
+                  Icons.arrow_forward_ios_outlined,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -38,7 +92,7 @@ class _HomeFernState extends State<HomeFern> {
       width: isActive ? 20 : 8,
       margin: const EdgeInsets.only(right: 5.0),
       decoration: BoxDecoration(
-        color: Constants.primaryColor,
+        color: isActive ? Constants.primaryColor : Colors.grey,
         borderRadius: BorderRadius.circular(5),
       ),
     );
@@ -49,11 +103,7 @@ class _HomeFernState extends State<HomeFern> {
     List<Widget> indicators = [];
 
     for (int i = 0; i < 3; i++) {
-      if (currentIndex == i) {
-        indicators.add(_indicator(true));
-      } else {
-        indicators.add(_indicator(false));
-      }
+      indicators.add(_indicator(currentIndex == i));
     }
 
     return indicators;
