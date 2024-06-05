@@ -6,6 +6,7 @@ class Constants {
   static var blackColor = Colors.yellow;
   static var mildColor = Colors.amberAccent;
   static var whiteColor = Colors.white;
+  static var sexy = Colors.amberAccent;
 
   //Onboarding texts
   static var titleOne = "Learn more about plants";
