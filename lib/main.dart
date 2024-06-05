@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: OutlinedButton(
               style: outlineButtonStyle,
               onPressed: () {},
-              child: const Text('PLAYER 2'),
+              child: const Text('PLAYER 3'),
             ),
           ),
         ],
