@@ -21,6 +21,9 @@ class _HomeFernState extends State<HomeFern> {
 
   @override
   Widget build(BuildContext context) {
+    int width = MediaQuery.of(context).size.width.toInt();
+    int height = MediaQuery.of(context).size.height.toInt();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -49,35 +52,41 @@ class _HomeFernState extends State<HomeFern> {
               createPage(
                   image: 'assets/images/plant-three.png',
                   title: Constants.titleThree,
-                  description: Constants.descriptionThree)
+                  description: Constants.descriptionThree),
             ],
           ),
-          Positioned(
-            left: MediaQuery.of(context).size.width * 0.1,
-            bottom: MediaQuery.of(context).size.height * 0.1,
+          Container(
+            margin: EdgeInsets.only(
+                left: width * 0.1, right: width * 0.1, bottom: height * 0.1),
+            width: width * 1,
+            height: height * 0.1,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: _buildIndicator(),
-            ),
-          ),
-          Positioned(
-            right: MediaQuery.of(context).size.width * 0.05,
-            bottom: MediaQuery.of(context).size.height * 0.07,
-            child: InkWell(
-              onTap: _nextPage,
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.15,
-                height: MediaQuery.of(context).size.width * 0.15,
-                decoration: BoxDecoration(
-                    color: Constants.primaryColor,
-                    borderRadius: BorderRadius.all(Radius.circular(360))),
-                child: Icon(
-                  Icons.arrow_forward_ios_outlined,
-                  color: Colors.white,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: _buildIndicator(),
                 ),
-              ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Constants.primaryColor,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: IconButton(
+                      color: Colors.white,
+                      onPressed: () {
+                        _pageController.nextPage(
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.linear);
+                      },
+                      icon: Icon(Icons.arrow_forward_ios_rounded),
+                    ),
+                  ),
+                )
+              ],
             ),
-          ),
+          )
         ],
       ),
     );
